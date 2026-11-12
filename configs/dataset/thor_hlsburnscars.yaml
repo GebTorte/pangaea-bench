@@ -1,0 +1,45 @@
+_target_: pangaea.datasets.hlsburnscars.HLSBurnScars
+dataset_name: HLSBurnScarsTHOR
+root_path: ./data/hlsburnscars
+download_url: https://huggingface.co/datasets/ibm-nasa-geospatial/hls_burn_scars/resolve/main/hls_burn_scars.tar.gz?download=true
+auto_download: true
+img_size: 224
+multi_temporal: false
+multi_modal: false
+
+# classes
+ignore_index: -1
+num_classes: 2
+classes:
+  - Not burned
+  - Burn scar
+distribution:
+  - 0.88889
+  - 0.11111
+
+# THOR-first optical-only interface on HLS Burn Scars.
+# This keeps the first integration simple and benchmark-compatible by using only the
+# RGB-like channels expected by the THOR adapter.
+bands:
+  optical:
+    - B4
+    - B3
+    - B2
+
+# These values are intentionally conservative placeholders for the first smoke-test
+# integration and should be replaced with calibrated statistics from the exact
+# dataset split if you want performance-critical training.
+data_mean:
+  optical:
+    - 0.058
+    - 0.066
+    - 0.072
+data_std:
+  optical:
+    - 0.032
+    - 0.030
+    - 0.028
+data_min:
+  optical: [0.0, 0.0, 0.0]
+data_max:
+  optical: [1.0, 1.0, 1.0]

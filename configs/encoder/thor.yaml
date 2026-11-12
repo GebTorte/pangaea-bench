@@ -1,0 +1,23 @@
+_target_: pangaea.encoders.thor_encoder.THOR_Encoder
+encoder_weights: null
+download_url: null
+model_name: thor_vit_base_encoder_alibi_patch_size_embed_v1
+native_model: thor_vit_base_encoder_alibi_patch_size_embed_v1
+
+embed_dim: 768
+input_size: 224
+ground_covers:
+  - 960
+
+input_bands:
+  optical:
+    - B4
+    - B3
+    - B2
+
+output_layers:
+  - 3
+  - 5
+  - 7
+  - 11
+output_dim: 768

@@ -20,7 +20,8 @@ from pangaea.encoders.base import Encoder
         "gfmswin",
         # "prithvi"
         "remoteclip",
-        "satlasnet",
+        #"satlasnet",
+        "satlasnet_si",
         "scalemae",
         "scalemae",
         "spectralgpt",
@@ -50,7 +51,8 @@ def test_encoder_init(config_name: str) -> None:
         "gfmswin",
         # "prithvi"
         "remoteclip",
-        "satlasnet",
+        "satlasnet_si",
+        #"satlasnet",
         "scalemae",
         "scalemae",
         "spectralgpt",
