@@ -128,9 +128,31 @@ class THOR_Encoder(Encoder):
             return 20
         elif product == "S2" and band_name in {"B2", "B3", "B4", "B8"}:
             return 10
-        elif product == "S1" and band_name in {"VV", "VH"}: # keep case for S1
+        elif product == "S1": #and band_name in {"VV", "VH"}: # keep redundant case for S1
             return 10
-        return 10
+        return 10 # default to 10m for unknown bands
+
+
+    def _resolve_ground_cover(self, x):
+        """
+        Resolve ground cover based on the input tensor shapes and their corresponding GSDs.
+
+        Then pass that resolved cover into THOR instead of self.ground_covers[0].
+        """
+        covers = set()
+        for modality, tensor in x.items():
+            if tensor is None:
+                continue
+            bands = self.input_bands.get(modality, [])
+            for idx, band in enumerate(bands):
+                product = "S2" if modality in {"optical", "rgb"} else ("S1" if modality in {"sar", "radar"} else modality.upper())
+                gsd = self._get_band_gsd(product, band)
+                cover = int(tensor.shape[-1] * gsd)
+                covers.add(cover)
+
+        if len(covers) > 1:
+            raise ValueError(f"Mixed THOR covers in one sample: {sorted(covers)}")
+        return next(iter(covers))
 
     def _build_thor_channels(self) -> dict[str, dict[str, int]]:
         """Build the THOR product/band metadata expected by the model.
@@ -245,10 +267,11 @@ class THOR_Encoder(Encoder):
                     raise ValueError("No valid THOR input data found in the passed modality dict.")
 
                 metadata = self._build_thor_metadata(thor_input)
+                ground_cover = self._resolve_ground_cover(x) # TODO check if necessary
                 output = self.thor_model(
                     thor_input,
                     metadata=metadata,
-                    ground_cover=self.ground_covers[0],
+                    ground_cover=ground_cover, # self.ground_covers[0], <-- replaced with resolved cover
                     return_channel_params=False,
                 )
 
@@ -276,6 +299,7 @@ class THOR_Encoder(Encoder):
         logger.info("THOR adapter is running in compatibility mode; no external checkpoint is loaded.")
 
     def freeze(self) -> None:
+        """Freeze the encoder parameters to prevent gradient updates."""
         if self.thor_model is not None:
             super().freeze()
         else:
