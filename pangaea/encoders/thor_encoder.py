@@ -118,6 +118,20 @@ class THOR_Encoder(Encoder):
                 bias=True,
             )
 
+    @staticmethod
+    def _get_band_gsd(product: str, band: str) -> int:
+        """Return the native GSD in meters for a product/band pair used by THOR."""
+        band_name = str(band).upper()
+        if product == "S2" and band_name in {"B1", "B9", "B10"}:
+            return 60
+        elif product == "S2" and band_name in {"B5", "B6", "B7", "B8A", "B11", "B12"}:
+            return 20
+        elif product == "S2" and band_name in {"B2", "B3", "B4", "B8"}:
+            return 10
+        elif product == "S1" and band_name in {"VV", "VH"}: # keep case for S1
+            return 10
+        return 10
+
     def _build_thor_channels(self) -> dict[str, dict[str, int]]:
         """Build the THOR product/band metadata expected by the model.
 
@@ -129,18 +143,15 @@ class THOR_Encoder(Encoder):
         for modality, bands in self.input_bands.items():
             if modality == "optical":
                 product = "S2"
-                gsd = 10
             elif modality in {"sar", "radar"}:
                 product = "S1"
-                gsd = 10
             else:
                 product = modality.upper()
-                gsd = 10
 
             for band in bands:
                 key = f"{product}:{band}"
                 channels[key] = {
-                    "GSD": gsd,
+                    "GSD": self._get_band_gsd(product, band),
                     "patch_size": patch_size,
                     "num_patch": max(1, self.input_size // patch_size),
                 }
@@ -189,8 +200,9 @@ class THOR_Encoder(Encoder):
         patch_size = max(1, self.input_size // 16)
         metadata: dict[str, dict[str, int]] = {}
         for product_band in x.keys():
+            product, _, band = product_band.partition(":")
             metadata[product_band] = {
-                "GSD": 10,
+                "GSD": self._get_band_gsd(product, band),
                 "patch_size": patch_size,
                 "num_patch": max(1, self.input_size // patch_size),
             }
