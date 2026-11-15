@@ -7,7 +7,7 @@ scikit-learn
 tensorboard
 tqdm
 tifffile
-timm
+timm>=1.0.31
 einops
 opencv-python
 rioxarray
