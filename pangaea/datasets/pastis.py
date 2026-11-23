@@ -377,4 +377,9 @@ class Pastis(RawGeoFMDataset):
     # NOTE: Download via huggingface dl tool
     @staticmethod
     def download():
-        pass
+        from huggingface_hub import snapshot_download
+        snapshot_download(
+            repo_id="IGNF/PASTIS-HD",
+            repo_type="dataset",
+            local_dir="data",
+        )

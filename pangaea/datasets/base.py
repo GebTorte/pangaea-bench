@@ -76,8 +76,8 @@ class RawGeoFMDataset(Dataset):
         self.download_url = download_url
         self.auto_download = auto_download
 
-        if not os.path.exists(self.root_path):
-            self.download(self)
+        if not os.path.exists(self.root_path) and self.auto_download:
+            self.download()
 
     def __len__(self) -> int:
         """Returns the length of the dataset.

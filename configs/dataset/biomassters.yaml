@@ -34,8 +34,8 @@ bands:
     - B11
     - B12
   sar:
-    - VV #set band name to match the input band name of the model e.g. VV for CROMA, ASC_VV for DOFA
-    - VH #set band name to match the input band name of the model e.g. VH for CROMA, ASC_VH for DOFA
+    - ASC_VV #set band name to match the input band name of the model e.g. VV for CROMA, ASC_VV for DOFA
+    - ASC_VH #set band name to match the input band name of the model e.g. VH for CROMA, ASC_VH for DOFA
     - DSC_VV
     - DSC_VH
 
