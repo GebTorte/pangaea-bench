@@ -123,6 +123,9 @@ class BioMassters(RawGeoFMDataset):
         )
         
         self.root_path = root_path
+        print()
+        print(self.root_path)
+        print("^root path")
         self.multi_temporal = multi_temporal
         self.temp = temp
         self.split = split
