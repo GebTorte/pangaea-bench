@@ -88,7 +88,7 @@ class RawGeoFMDataset(Dataset):
         Returns:
             int: length of the dataset
         """
-        raise NotImplementedError
+        raise NotImplementedError("not len?")
 
     def __getitem__(self, i: int) -> dict[str, torch.Tensor | dict[str, torch.Tensor]]:
         """Returns the i-th item of the dataset.
@@ -110,16 +110,16 @@ class RawGeoFMDataset(Dataset):
             regression datasets.,
              "metadata": dict}.
         """
-        raise NotImplementedError
+        raise NotImplementedError("not getitem")
 
     @staticmethod
-    def download(self) -> None:
+    def download() -> None:
         """Download the dataset.
 
         Raises:
             NotImplementedError: raise if the method is not implemented
         """
-        raise NotImplementedError
+        raise NotImplementedError("not download")
 
 
 class GeoFMSubset(Subset):
@@ -144,7 +144,7 @@ class GeoFMDataset(Dataset):
         self,
         dataset: RawGeoFMDataset | GeoFMSubset,
         preprocessor: Preprocessor = None,
-        replicate: int = None,
+        replicate: int | None = None,
     ):
         """Initializes the dataset.
 
