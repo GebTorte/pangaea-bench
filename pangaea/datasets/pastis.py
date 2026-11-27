@@ -381,5 +381,5 @@ class Pastis(RawGeoFMDataset):
         snapshot_download(
             repo_id="IGNF/PASTIS-HD",
             repo_type="dataset",
-            local_dir="data",
+            local_dir="data/pastis",
         )

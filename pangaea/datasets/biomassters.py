@@ -123,9 +123,6 @@ class BioMassters(RawGeoFMDataset):
         )
         
         self.root_path = root_path
-        print()
-        print(self.root_path)
-        print("^root path")
         self.multi_temporal = multi_temporal
         self.temp = temp
         self.split = split
@@ -175,6 +172,22 @@ class BioMassters(RawGeoFMDataset):
             'metadata': {'masks':mask}
         }
 
-    # @staticmethod
-    # def download(self, silent=False):
-    #     pass
+    @staticmethod
+    def download(silent=False):
+        from huggingface_hub import snapshot_download
+        snapshot_download(
+            repo_id="nascetti-a/BioMassters",
+            repo_type="dataset",
+            local_dir="data/biomassters",
+        )
+    #@staticmethod
+    #def download(self, silent=False):
+    #    from huggingface_hub import hf_hub_download
+    #    import pandas as pd
+
+    #    REPO_ID = "nascetti-a/BioMassters"
+    #    FILENAME = "*_metadata.csv.csv"
+
+    #    dataset = pd.read_csv(
+    #        hf_hub_download(repo_id=REPO_ID, filename=FILENAME, repo_type="dataset")
+    #    )
