@@ -112,8 +112,8 @@ class RawGeoFMDataset(Dataset):
         """
         raise NotImplementedError("not getitem")
 
-    @staticmethod
-    def download() -> None:
+    #@staticmethod
+    def download(self) -> None:
         """Download the dataset.
 
         Raises:
