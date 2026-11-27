@@ -194,8 +194,8 @@ class BioMassters(RawGeoFMDataset):
                 repo_id=REPO_ID, 
                 filename=FILENAME, 
                 repo_type="dataset",
-                local_dir=self.root_path,
-                local_files_only=True
+                local_dir=self.root_path if self.root_path else "./data/biomassters",
+                #local_files_only=True
             )
         )
 

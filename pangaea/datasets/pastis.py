@@ -375,11 +375,11 @@ class Pastis(RawGeoFMDataset):
         return len(self.meta_patch) * self.nb_split * self.nb_split
 
     # NOTE: Download via huggingface dl tool
-    @staticmethod
-    def download():
+    #@staticmethod
+    def download(self):
         from huggingface_hub import snapshot_download
         snapshot_download(
             repo_id="IGNF/PASTIS-HD",
             repo_type="dataset",
-            local_dir="data/pastis",
+            local_dir=self.root_path if self.root_path else "data/pastis",
         )
