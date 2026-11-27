@@ -381,5 +381,5 @@ class Pastis(RawGeoFMDataset):
         snapshot_download(
             repo_id="IGNF/PASTIS-HD",
             repo_type="dataset",
-            local_dir=self.root_path if self.root_path else "data/pastis",
+            local_dir=self.root_path if self.root_path else "./data/pastis",
         )

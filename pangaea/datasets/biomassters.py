@@ -180,8 +180,8 @@ class BioMassters(RawGeoFMDataset):
     #        repo_type="dataset",
     #        local_dir="data/biomassters",
     #    )
+    
     # @staticmethod
-
     def download(self, silent=False):
         import pandas as pd
         from huggingface_hub import hf_hub_download
